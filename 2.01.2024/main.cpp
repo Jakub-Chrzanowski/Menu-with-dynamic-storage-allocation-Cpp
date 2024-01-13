@@ -1,17 +1,18 @@
 #include <iostream>
 #include <fstream>
 #include <windows.h>
+#include <stdlib.h>
+
 using namespace std;
 
 
-
+HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
 
 int menu()
 {
-    HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
     int x;
     cout<<endl;
-    SetConsoleTextAttribute(hConsole, FOREGROUND_RED);
+    SetConsoleTextAttribute(hConsole, FOREGROUND_RED );
     cout<<"1. Dodaj element tablicy"<<endl;
     SetConsoleTextAttribute(hConsole, FOREGROUND_BLUE);
     cout<<"2. Wstaw element tablicy"<<endl;
@@ -47,6 +48,7 @@ int main()
         case 1:
             {
              int * tmp = NULL;
+            SetConsoleTextAttribute(hConsole, FOREGROUND_RED ); 
             cout<<"Podaj element tablicy: "<<endl;
             if(p==NULL)
             {
@@ -70,41 +72,49 @@ int main()
             }
         case 2:
             {
-    cout << "Podaj pozycje, na ktorej chcesz wstawic element: ";
-    cin >> pozycja;
-    if (pozycja > n) {
-        cout << "Podana pozycja jest wieksza niz rozmiar tablicy." << endl;
-        break;
-    }
-    cout << "Podaj wartosc elementu: ";
-    cin >> wartosc;
-    for (int i = n - 1; i >= pozycja; i--) {
-        p[i + 1] = p[i];
-    }
-    p[pozycja] = wartosc;
-    n++;
-    break;
+            SetConsoleTextAttribute(hConsole, FOREGROUND_BLUE);    
+            cout << "Podaj pozycje, na ktorej chcesz wstawic element: ";
+            cin >> pozycja;
+            if (pozycja > n) {
+                SetConsoleTextAttribute(hConsole, FOREGROUND_BLUE);
+                cout << "Podana pozycja jest wieksza niz rozmiar tablicy." << endl;
+                break;
+            }
+            SetConsoleTextAttribute(hConsole, FOREGROUND_BLUE);
+            cout << "Podaj wartosc elementu: ";
+            cin >> wartosc;
+            for (int i = n - 1; i >= pozycja; i--) {
+                p[i + 1] = p[i];
+            }
+            p[pozycja] = wartosc;
+            n++;
+            break;
             }
         case 3:
             {
-    cout << "Podaj pozycje, na ktorej znajduje sie element do usuniecia: ";
-    cin >> pozycja;
-    if (pozycja >= n) {
-    cout << "Podana pozycja jest wieksza niz rozmiar tablicy." << endl;
-        return 0;
-    }
-    for (int i = pozycja; i < n - 1; i++) {
-        p[i] = p[i + 1];
-    }
-    n--;
+            SetConsoleTextAttribute(hConsole, FOREGROUND_GREEN);    
+            cout << "Podaj pozycje, na ktorej znajduje sie element, ktory chcesz usunac: ";
+            cin >> pozycja;
+            if (pozycja >= n) {
+            SetConsoleTextAttribute(hConsole, FOREGROUND_GREEN);
+            cout << "Podana pozycja jest wieksza niz rozmiar tablicy." << endl;
+            return 0;
+                            }       
+            for (int i = pozycja; i < n - 1; i++) {
+            p[i] = p[i + 1];
+             }
+            n--;
             }
         case 4:
             for(int i=0; i<n;i++)
             {
+                 SetConsoleTextAttribute(hConsole, FOREGROUND_RED | FOREGROUND_BLUE);
                  cout<<p[i]<<",";
             }
             cout<<endl;
             break;
+        case 7:
+            exit(0);
         }
     }
     return 0;
