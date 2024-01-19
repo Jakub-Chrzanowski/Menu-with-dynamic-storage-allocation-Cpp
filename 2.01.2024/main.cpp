@@ -98,14 +98,20 @@ int main()
             if (pozycja >= n) {
             SetConsoleTextAttribute(hConsole, FOREGROUND_GREEN);
             cout << "Podana pozycja jest wieksza niz rozmiar tablicy." << endl;
-            return 0;
                             }       
             for (int i = pozycja; i < n - 1; i++) {
             p[i] = p[i + 1];
              }
             n--;
+            break;
             }
         case 4:
+            {
+            if(p==NULL)
+            {
+                SetConsoleTextAttribute(hConsole, FOREGROUND_RED | FOREGROUND_BLUE);
+                cout<<"Pusta tablica!";
+            }
             for(int i=0; i<n;i++)
             {
                  SetConsoleTextAttribute(hConsole, FOREGROUND_RED | FOREGROUND_BLUE);
@@ -113,9 +119,81 @@ int main()
             }
             cout<<endl;
             break;
+            }
+        case 5:
+        /*
+        Krótki komentarz wstępu do tego case'a:
+        Komentarz tyczy się tutaj sposobu jak poprawnie powinien być sformułowany plik tekstowy,aby kod poprawnie się wykonał.
+        Schemat pliku tekstowego:
+        4 <- pierwsza linijka tekstu: podana tutaj liczba jest rozmiarem tablicy
+        13 14 15 17 <- kolejna linijka tekstu: podane tutaj liczby są zawartością tablicy
+        */
+            {
+            SetConsoleTextAttribute(hConsole, FOREGROUND_GREEN | FOREGROUND_BLUE);
+            cout << "Podaj sciezke dostepu do pliku: ";
+            string sciezka_pliku;
+            cin >> sciezka_pliku;
+            ifstream fin(sciezka_pliku,ios::app);
+            if (!fin.is_open()) {
+                SetConsoleTextAttribute(hConsole, FOREGROUND_RED);
+                cout << "Nie mozna otworzyc pliku." << endl;
+                break;  
+            }
+            int rozmiar;
+            fin >> rozmiar;
+            delete[] p;
+            p = new int[rozmiar];
+            for (int i = 0; i < rozmiar; i++) {
+                fin >> p[i];
+            }
+            n = rozmiar;
+            SetConsoleTextAttribute(hConsole, FOREGROUND_GREEN);
+            cout << "Tablica zostala wczytana z pliku." << endl;
+            fin.close();
+            break;
+            }
+        case 6:
+        /*
+        Krótki komentarz również tutaj:
+        Plik zapisywany jest w następujący sposób:
+        n <- rozmiar tablicy
+        x y z a b c <- elementy tablicy
+        */
+            {
+            SetConsoleTextAttribute(hConsole, FOREGROUND_GREEN | FOREGROUND_RED);
+            cout<<"Podaj sciezke dostepu do pliku, do ktorego chcesz zapisac tablice: "<<endl;
+            string sciezka_pliku;
+            cin>>sciezka_pliku;
+            ofstream fout(sciezka_pliku,ios::out|ios::trunc);
+            if(!fout.is_open())
+            {
+                SetConsoleTextAttribute(hConsole, FOREGROUND_RED);
+                cout << "Nie mozna otworzyc pliku." << endl;
+                break; 
+            }
+            if(p==NULL)
+            {
+                cout<<"Nie mozna zapisac pustej tablicy.";
+            }
+            else
+            {
+                fout<<n<<endl;
+                for(int i=0; i<n;i++)
+                {
+                    fout<<p[i]<<" ";
+                }
+                cout<<"Pomyslne zapisano tablice do pliku.";
+            } 
+            fout.close();
+            break;
+            }
         case 7:
+            {
             exit(0);
-        }
+            break;
+            }
+    }
     }
     return 0;
+    
 }
