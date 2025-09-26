@@ -12,6 +12,8 @@ int menu()
 {
     int x;
     cout<<endl;
+    /*    Nakłada kolor na tekst w konsoli
+        */
     SetConsoleTextAttribute(hConsole, FOREGROUND_RED );
     cout<<"1. Dodaj element tablicy"<<endl;
     SetConsoleTextAttribute(hConsole, FOREGROUND_BLUE);
